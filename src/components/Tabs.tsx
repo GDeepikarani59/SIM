@@ -92,7 +92,7 @@ const Tabs = ({
       </div>
 
       {/* Content */}
-      <div className="border p-4 rounded-lg bg-white shadow-sm">
+      <div className="border p-4 rounded-lg bg-white shadow-sm border border-gray-30">
         {renderTabContent()}
       </div>
     </div>
