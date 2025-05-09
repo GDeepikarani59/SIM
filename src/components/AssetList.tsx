@@ -10,7 +10,7 @@ interface Asset {
 interface AssetListProps {
   assets: Asset[];
 }
-
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 const AssetList = ({ assets }: AssetListProps) => {
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -37,12 +37,13 @@ const AssetList = ({ assets }: AssetListProps) => {
                 </p>
 
                 {/* Right: Link */}
-                <div className="w-1/3 text-right">
+                <div className="w-1/3 flex justify-end">
                   <Link
                     href={`/${asset.id}`}
-                    className="text-blue-500 hover:text-blue-700 font-semibold"
+                    className="inline-flex items-center text-blue-500 hover:text-blue-700 font-semibold"
                   >
                     View Details
+                    <ArrowRightIcon className="h-5 w-5 ml-2" />
                   </Link>
                 </div>
               </div>

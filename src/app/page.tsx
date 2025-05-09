@@ -14,9 +14,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen py-8 px-4">
-      {/* Container for better spacing */}
       <div className="max-w-7xl mx-auto px-6">
-        {/* Heading with improved font size and color */}
         <h1 className="text-4xl font-bold text-gray-700 mb-8 tracking-tight leading-tight">
           Robotic Assets
         </h1>
