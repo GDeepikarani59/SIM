@@ -1,59 +1,42 @@
-import { render, screen } from "@testing-library/react";
-import AssetDetail from "../../../components/AssetDetail";
-import { assets } from "../../../data/assets";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Tabs from "../../../components/Tabs";
 
-// Mock the assets data
-jest.mock("../../../data/assets", () => ({
-  assets: [
-    {
-      id: "1",
-      name: "AlphaBot",
-      type: "Humanoid",
-      productInfo: "AlphaBot is designed for personal assistance.",
-      repairInstructions: "1. Unscrew the back panel. 2. Replace battery.",
-      billOfMaterials: ["Motor X", "Sensor Y", "Battery Z"],
-      cadModelUrl: "https://example.com/cad/alphabot",
-    },
-    {
-      id: "2",
-      name: "BetaBot",
-      type: "Industrial",
-      productInfo: "BetaBot is designed for industrial use.",
-      repairInstructions: "1. Check the motor. 2. Replace the sensor.",
-      billOfMaterials: ["Motor A", "Sensor B", "Battery C"],
-      cadModelUrl: "https://example.com/cad/betabot",
-    },
-  ],
-}));
+describe("Tabs Component", () => {
+  const props = {
+    productInfo: "Product Information Content",
+    repairInstructions: "Repair Instructions Content",
+    billOfMaterials: ["Screw", "Bolt", "Washer"],
+    cadModelUrl: "https://example.com/cad-model",
+  };
 
-describe("AssetDetail Component", () => {
-  it("displays asset details when assetId matches", () => {
-    // Render the component with a valid assetId
-    render(<AssetDetail assetId="1" />);
-
-    // Assertions to check if the correct asset details are displayed
-    expect(screen.getByText("AlphaBot")).toBeInTheDocument();
-    expect(screen.getByText("Humanoid Robot")).toBeInTheDocument();
+  it("renders Product Info tab by default", () => {
+    render(<Tabs {...props} />);
     expect(
-      screen.getByText("AlphaBot is designed for personal assistance.")
+      screen.getByText(/Product Information Content/i)
     ).toBeInTheDocument();
-    expect(
-      screen.getByText("1. Unscrew the back panel. 2. Replace battery.")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Motor X")).toBeInTheDocument();
-    expect(screen.getByText("Sensor Y")).toBeInTheDocument();
-    expect(screen.getByText("Battery Z")).toBeInTheDocument();
-    expect(screen.getByText("View CAD Model")).toHaveAttribute(
-      "href",
-      "https://example.com/cad/alphabot"
-    );
   });
 
-  it("displays 'Asset not found' message when assetId does not match", () => {
-    // Render the component with a non-existent assetId
-    render(<AssetDetail assetId="non-existent-id" />);
+  it("renders Repair Instructions when clicked", () => {
+    render(<Tabs {...props} />);
+    fireEvent.click(screen.getByText(/Repair Instructions/i));
+    expect(
+      screen.getByText(/Repair Instructions Content/i)
+    ).toBeInTheDocument();
+  });
 
-    const errorMessage = screen.getByText("🚫 Asset not found");
-    expect(errorMessage).toBeInTheDocument();
+  it("renders Bill of Materials list when clicked", () => {
+    render(<Tabs {...props} />);
+    fireEvent.click(screen.getByText(/Bill of Materials/i));
+    props.billOfMaterials.forEach((item) => {
+      expect(screen.getByText(item)).toBeInTheDocument();
+    });
+  });
+
+  it("renders CAD Model link when clicked", () => {
+    render(<Tabs {...props} />);
+    fireEvent.click(screen.getByText(/CAD Model/i));
+    const link = screen.getByText(/View CAD Model/i);
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", props.cadModelUrl);
   });
 });
