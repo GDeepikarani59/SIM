@@ -20,13 +20,13 @@ This is a **Robot Asset Management System** built with **Next.js**, **React**, a
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/robot-asset-management.git
+   git clone https://github.com/your-username/SIM.git
    ```
 
 2. Navigate into the project folder:
 
    ```bash
-   cd robot-asset-management
+   cd sims-assignment
    ```
 
 3. Install dependencies:
